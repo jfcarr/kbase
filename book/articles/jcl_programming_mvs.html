@@ -1,0 +1,346 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>JCL and Programming On the MVS Turnkey System - Knowledge Base</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="shortcut icon" href="../favicon-dec1f98e.png">
+        <link rel="stylesheet" href="../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../css/general-e96d0476.css">
+        <link rel="stylesheet" href="../css/chrome-d279d366.css">
+        <link rel="stylesheet" href="../css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex-f8d22769.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc-43cabbdb.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Knowledge Base</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="jcl-and-programming-on-the-mvs-turnkey-system"><a class="header" href="#jcl-and-programming-on-the-mvs-turnkey-system">JCL and Programming On the MVS Turnkey System</a></h1>
+<p>This assumes you’ve already set up, run, connected to, and logged in to an MVS Turnkey system. If not, you can find instructions <a href="mainframe_emulation_rpi.html">here</a>.</p>
+<h2 id="about"><a class="header" href="#about">About</a></h2>
+<p>A job to be run consists of two parts:</p>
+<ol>
+<li><a href="../glossary.html#job-control-language-jcl">JCL</a> to tell the mainframe how to run the program, and</li>
+<li>The actual program, written in a language with a supporting compiler on the mainframe.</li>
+</ol>
+<pre><code class="language-txt">// JCL comes first, and is prefixed by two slashes
+The program source follows.
+</code></pre>
+<blockquote class="blockquote-tag blockquote-tag-important">
+<p class="blockquote-tag-title"><svg viewbox="0 0 16 16" width="18" height="18"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>Important</p>
+<p>The JCL message class must be set to ‘H’, or you won’t be able to see the output from your jobs.</p>
+<p>The ‘H’ indicates to the system that the output should be ‘Held’, making it available for viewing in the OUTLIST utility, in Data Set Utilities.</p>
+</blockquote>
+<h2 id="cobol"><a class="header" href="#cobol">COBOL</a></h2>
+<p>COBOL first appeared in 1959. The latest stable release was in 2014. It’s meant to be “English-like” in syntax.</p>
+<p>COBOL is still widely deployed. For example, as of 2017, about 95 percent of ATM swipes use COBOL code, and it powers 80 percent of in-person transactions.</p>
+<h3 id="create-and-submit-the-job"><a class="header" href="#create-and-submit-the-job">Create and Submit the Job</a></h3>
+<p>Your starting point should be the main screen:</p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="../images/jcl_programming/1_mvs_cobol_main_screen.png" alt=""><span class="img-wrapper"><img src="../images/jcl_programming/1_mvs_cobol_main_screen.png" alt=""></span></label></p>
+<p>Enter ‘1’ to access the RFE tool:</p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="../images/jcl_programming/2_mvs_cobol_rfe_tool.png" alt=""><span class="img-wrapper"><img src="../images/jcl_programming/2_mvs_cobol_rfe_tool.png" alt=""></span></label></p>
+<p>Enter ‘3’ to access utility functions:</p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="../images/jcl_programming/3_mvs_cobol_utilities.png" alt=""><span class="img-wrapper"><img src="../images/jcl_programming/3_mvs_cobol_utilities.png" alt=""></span></label></p>
+<p>Enter ‘4’ to access the Data Set list:</p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="../images/jcl_programming/4_mvs_cobol_dslist.png" alt=""><span class="img-wrapper"><img src="../images/jcl_programming/4_mvs_cobol_dslist.png" alt=""></span></label></p>
+<p>Enter ‘SYS2.JCLLIB’ to filter the Data Set list:</p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="../images/jcl_programming/5_mvs_cobol_dslist_filter.png" alt=""><span class="img-wrapper"><img src="../images/jcl_programming/5_mvs_cobol_dslist_filter.png" alt=""></span></label></p>
+<p>Tab to the detail line for SYS2.JCLLIB, then enter ‘e’ in the S column, for Edit:</p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="../images/jcl_programming/6_mvs_cobol_jcllib_edit.png" alt=""><span class="img-wrapper"><img src="../images/jcl_programming/6_mvs_cobol_jcllib_edit.png" alt=""></span></label></p>
+<p>The Data Set list will display:</p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="../images/jcl_programming/7_mvs_cobol_dataset_list.png" alt=""><span class="img-wrapper"><img src="../images/jcl_programming/7_mvs_cobol_dataset_list.png" alt=""></span></label></p>
+<p>If you press [F8] (<em>page down</em>) a few times, you’ll see several Data Sets with names that begin with ‘TEST’. These are test programs for various languages:</p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="../images/jcl_programming/8_mvs_cobol_test_programs.png" alt=""><span class="img-wrapper"><img src="../images/jcl_programming/8_mvs_cobol_test_programs.png" alt=""></span></label></p>
+<p>We’ll be using TESTCOB as a template for our COBOL job. We don’t want to use it directly, creating a copy instead. The first thing to do is to create a new, empty Data Set, with the name NEWCOB:</p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="../images/jcl_programming/9_mvs_cobol_start_new.png" alt=""><span class="img-wrapper"><img src="../images/jcl_programming/9_mvs_cobol_start_new.png" alt=""></span></label></p>
+<p>The new, empty Data Set opens in REVEDIT.</p>
+<p>Next, we indicate that we want to populate it with a copy of the contents of TESTCOB:</p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="../images/jcl_programming/10_mvs_cobol_copy_testcob.png" alt=""><span class="img-wrapper"><img src="../images/jcl_programming/10_mvs_cobol_copy_testcob.png" alt=""></span></label></p>
+<p>The editor will display the copied text:</p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="../images/jcl_programming/11_mvs_cobol_copy_testcob_complete.png" alt=""><span class="img-wrapper"><img src="../images/jcl_programming/11_mvs_cobol_copy_testcob_complete.png" alt=""></span></label></p>
+<p>Make a few edits to the copied text. First, in line 0001, change TESTCOB to NEWCOB:</p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="../images/jcl_programming/12_mvs_cobol_update_job_name.png" alt=""><span class="img-wrapper"><img src="../images/jcl_programming/12_mvs_cobol_update_job_name.png" alt=""></span></label></p>
+<p>In line 0002, update the description:</p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="../images/jcl_programming/13_mvs_cobol_update_description.png" alt=""><span class="img-wrapper"><img src="../images/jcl_programming/13_mvs_cobol_update_description.png" alt=""></span></label></p>
+<p>Finally, in line 0004, change the MSGCLASS to ‘H’:</p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="../images/jcl_programming/14_mvs_cobol_update_msgclass.png" alt=""><span class="img-wrapper"><img src="../images/jcl_programming/14_mvs_cobol_update_msgclass.png" alt=""></span></label></p>
+<p>(This will ensure that the output from the job is retained and viewable after we run it)</p>
+<p>Save your changes:</p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="../images/jcl_programming/15_mvs_cobol_save.png" alt=""><span class="img-wrapper"><img src="../images/jcl_programming/15_mvs_cobol_save.png" alt=""></span></label></p>
+<p>Submit the job:</p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="../images/jcl_programming/16_mvs_cobol_submit.png" alt=""><span class="img-wrapper"><img src="../images/jcl_programming/16_mvs_cobol_submit.png" alt=""></span></label></p>
+<p>You’ll see a confirmation message, indicating that the job has been submitted:</p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="../images/jcl_programming/17_mvs_cobol_submitted.png" alt=""><span class="img-wrapper"><img src="../images/jcl_programming/17_mvs_cobol_submitted.png" alt=""></span></label></p>
+<h3 id="check-the-results"><a class="header" href="#check-the-results">Check the Results</a></h3>
+<p>If you aren’t already on the main screen, press [F3] until it’s displayed:</p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="../images/jcl_programming/1_mvs_cobol_main_screen.png" alt=""><span class="img-wrapper"><img src="../images/jcl_programming/1_mvs_cobol_main_screen.png" alt=""></span></label></p>
+<p>Enter ‘1’ to access the RFE tool:</p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="../images/jcl_programming/2_mvs_cobol_rfe_tool.png" alt=""><span class="img-wrapper"><img src="../images/jcl_programming/2_mvs_cobol_rfe_tool.png" alt=""></span></label></p>
+<p>Enter ‘3’ to access utility functions:</p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="../images/jcl_programming/3_mvs_cobol_utilities.png" alt=""><span class="img-wrapper"><img src="../images/jcl_programming/3_mvs_cobol_utilities.png" alt=""></span></label></p>
+<p>Enter ‘8’ to access held job output:</p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="../images/jcl_programming/18_mvs_cobol_outlist.png" alt=""><span class="img-wrapper"><img src="../images/jcl_programming/18_mvs_cobol_outlist.png" alt=""></span></label></p>
+<p>Enter ‘ST *’, indicating that you want to display all held jobs:</p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="../images/jcl_programming/19_mvs_cobol_held_jobs_filter.png" alt=""><span class="img-wrapper"><img src="../images/jcl_programming/19_mvs_cobol_held_jobs_filter.png" alt=""></span></label></p>
+<p>You’ll see ‘NEWCOB’, the job you recently submitted, at the end of the list:</p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="../images/jcl_programming/20_mvs_cobol_held_jobs_results.png" alt=""><span class="img-wrapper"><img src="../images/jcl_programming/20_mvs_cobol_held_jobs_results.png" alt=""></span></label></p>
+<p>Enter ‘S’ in the S column for the NEWCOB job:</p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="../images/jcl_programming/21_mvs_cobol_request_output_details.png" alt=""><span class="img-wrapper"><img src="../images/jcl_programming/21_mvs_cobol_request_output_details.png" alt=""></span></label></p>
+<p>Job output is displayed:</p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="../images/jcl_programming/22_mvs_cobol_output_details_result.png" alt=""><span class="img-wrapper"><img src="../images/jcl_programming/22_mvs_cobol_output_details_result.png" alt=""></span></label></p>
+<p>Press [F8] to page down, and you’ll see the ‘Hello World’ output:</p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="../images/jcl_programming/22_mvs_cobol_output_details_result_hello.png" alt=""><span class="img-wrapper"><img src="../images/jcl_programming/22_mvs_cobol_output_details_result_hello.png" alt=""></span></label></p>
+<p>Press [F3] several times to return to the main screen.</p>
+<h2 id="fortran"><a class="header" href="#fortran">FORTRAN</a></h2>
+<p>FORTRAN first appeared in 1957. The latest stable release was in 2018. It’s widely used in scientific and engineering applications.</p>
+<p>Follow the COBOL instructions, with the following differences:</p>
+<ol>
+<li>Copy ‘TESTFORT’ instead of ‘TESTCOB’, and name it ‘NEWFORT’ instead of ‘NEWCOB’.</li>
+<li>When you edit NEWFORT, change the job name and description to indicate NEWFORT instead of NEWCOB.</li>
+</ol>
+<h2 id="pl1"><a class="header" href="#pl1">PL/1</a></h2>
+<p>You may also see the name written as ‘PL/I’. It first appeared in 1964, and the latest stable release was in 2019.</p>
+<p>Follow the COBOL instructions, with the following differences:</p>
+<ol>
+<li>Copy ‘TESTPL1’ instead of ‘TESTCOB’, and name it ‘NEWPL1’ instead of ‘NEWCOB’.</li>
+<li>When you edit NEWPL1, change the job name and description to indicate NEWPL1 instead of NEWCOB.</li>
+</ol>
+<p>There’s an additional change, and it’s important:</p>
+<blockquote class="blockquote-tag blockquote-tag-important">
+<p class="blockquote-tag-title"><svg viewbox="0 0 16 16" width="18" height="18"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>Important</p>
+<p>There’s a critical “gotcha” in Pl/1 programs. MVS requires a JOBLIB statement in the JCL, and it’s not included in the turnkey sample programs. The following additional line is required in the Data Set. This should be added as a new line at the end of the JCL section:</p>
+<p><code>//JOBLIB DD DSN=SYS1.PL1LIB,DISP=SHR</code></p>
+</blockquote>
+<blockquote class="blockquote-tag blockquote-tag-note">
+<p class="blockquote-tag-title"><svg viewbox="0 0 16 16" width="18" height="18"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p>
+<p>To add a new line in the editor, enter an ‘I’ in the first column of a row, and the new row will be inserted after. Example location:</p>
+</blockquote>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="../images/jcl_programming/mvs_editor_insert.png" alt=""><span class="img-wrapper"><img src="../images/jcl_programming/mvs_editor_insert.png" alt=""></span></label></p>
+<blockquote class="blockquote-tag blockquote-tag-tip">
+<p class="blockquote-tag-title"><svg viewbox="0 0 16 16" width="18" height="18"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Tip</p>
+<p>You can also delete a line by entering a ‘D’ in the same location.</p>
+</blockquote>
+<h2 id="c"><a class="header" href="#c">C</a></h2>
+<p>C first appeared in 1972, and the latest stable release was in 2018. It’s the most actively used “old language” by far, heavily used in operating system and kernel development, device drivers, and embedded development.</p>
+<p>It’s a dangerous language: Memory management is tricky. But, it’s also extremely powerful, as it’s well suited for getting close to the hardware.</p>
+<p>Follow the COBOL instructions, with the following differences:</p>
+<ol>
+<li>Copy ‘TESTJCC’ instead of ‘TESTCOB’, and name it ‘NEWJCC’ instead of ‘NEWCOB’. <strong>Use TESTJCC as your copy source, not TESTGCC. The GCC compiler ABENDs (throws an error) in the MVS Turnkey system.</strong></li>
+<li>When you edit NEWJCC, change the job name and description to indicate NEWJCC instead of NEWCOB.</li>
+</ol>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../topics/mainframe.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="../articles/mainframe_emulation_rpi.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../topics/mainframe.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="../articles/mainframe_emulation_rpi.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../mark-09e88c2c.min.js"></script>
+        <script src="../searcher-09f2665d.js"></script>
+
+        <script src="../clipboard-1626706a.min.js"></script>
+        <script src="../highlight-abc7f01d.js"></script>
+        <script src="../book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

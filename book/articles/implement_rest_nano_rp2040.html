@@ -1,0 +1,800 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Implement a REST Service on a Nano RP2040 - Knowledge Base</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="shortcut icon" href="../favicon-dec1f98e.png">
+        <link rel="stylesheet" href="../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../css/general-e96d0476.css">
+        <link rel="stylesheet" href="../css/chrome-d279d366.css">
+        <link rel="stylesheet" href="../css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex-f8d22769.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc-43cabbdb.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Knowledge Base</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="implement-a-rest-service-on-a-nano-rp2040"><a class="header" href="#implement-a-rest-service-on-a-nano-rp2040">Implement a REST Service on a Nano RP2040</a></h1>
+<p>The is an Arduino Nano board with a Raspberry Pi RP2040 microcontroller that supports Bluetooth, WiFi, and machine learning. It has an onboard accelerometer, gyroscope, microphone, and temperature sensor.</p>
+<p>With the built-in sensors and WiFi, it’s a good candidate for a remote monitoring solution. We’ll implement a simple REST service that returns the current temperature.</p>
+<h1 id="toolset"><a class="header" href="#toolset">Toolset</a></h1>
+<p>Here’s what I’ll be using:</p>
+<ul>
+<li><a href="https://www.amazon.com/dp/B095J4KFVT">Nano RP2040 board with a micro USB cable</a></li>
+<li><a href="https://docs.arduino.cc/arduino-cli/">Arduino CLI</a></li>
+<li><a href="https://code.visualstudio.com/">Visual Studio Code</a> with the <a href="https://marketplace.visualstudio.com/items?itemName=vscode-arduino.vscode-arduino-community">Arduino Community Edition extension</a>. This is a community fork of Microsoft’s (<a href="https://github.com/microsoft/vscode-arduino/issues/1757">deprecated</a>) Arduino extension.</li>
+</ul>
+<h1 id="board-setup"><a class="header" href="#board-setup">Board Setup</a></h1>
+<p>Plug in your Nano RP2040 board and issue the following command:</p>
+<pre><code class="language-bash">arduino-cli board list
+</code></pre>
+<p>You should see something like this:</p>
+<pre><code class="language-txt">Port         Protocol Type              Board Name                  FQBN                                Core
+/dev/ttyACM0 serial   Serial Port (USB) Arduino Nano RP2040 Connect arduino:mbed_nano:nanorp2040connect arduino:mbed_nano
+</code></pre>
+<p>You will probably need to install the core:</p>
+<pre><code class="language-bash">arduino-cli core install arduino:mbed_nano
+</code></pre>
+<p>We’ll be using three additional libraries:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Name</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>Arduino_LSM6DSOX</td><td>Access the IMU for accelerometer, gyroscope, and embedded temperature sensor.</td></tr>
+<tr><td>ArduinoJson</td><td>A simple and efficient JSON library for embedded C++.</td></tr>
+<tr><td>WiFiNINA</td><td>With this library you can instantiate Servers, Clients and send/receive UDP packets through WiFi.</td></tr>
+</tbody>
+</table>
+</div>
+<p>Install them:</p>
+<pre><code class="language-bash">arduino-cli lib install Arduino_LSM6DSOX
+
+arduino-cli lib install ArduinoJson
+
+arduino-cli lib install WiFiNINA
+</code></pre>
+<h1 id="project-structure--setup"><a class="header" href="#project-structure--setup">Project Structure / Setup</a></h1>
+<p>Create a directory named <strong>web_server_rest_temp</strong>.</p>
+<p>Open the directory in VS Code.</p>
+<p>Create a Makefile containing the following content:</p>
+<pre><code class="language-make">ARDCMD=arduino-cli
+FQBNSTR=arduino:mbed_nano:nanorp2040connect
+PORT=/dev/ttyACM0
+SKETCHNAME=web_server_rest_temp
+
+default:
+	@echo 'Targets:'
+	@echo '  compile  -- Compile sketch, but don''t upload it.'
+	@echo '  upload   -- Compile and upload sketch.'
+	@echo '  monitor  -- Open the serial port monitor.'
+
+compile:
+	$(ARDCMD) compile --fqbn $(FQBNSTR) $(SKETCHNAME)
+
+upload: compile
+	$(ARDCMD) upload -p $(PORT) --fqbn $(FQBNSTR) $(SKETCHNAME)
+
+monitor:
+	$(ARDCMD) monitor -p $(PORT)
+
+</code></pre>
+<p>You can type out individual commands for compiling, uploading, and monitoring instead, but using a Makefile is more convenient.</p>
+<p>Create a subdirectory, also named <strong>web_server_rest_temp</strong>.</p>
+<p>In the subdirectory, create a file named <strong>arduino_secrets.h</strong> containing the following contents:</p>
+<pre><code class="language-c">#define SECRET_SSID "wireless_network_name"           // The name of your wireless network
+#define SECRET_PASSWORD "wireless_network_password"   // The password for your wireless network
+#define SECRET_PORT 8090                              // The port that the REST service will run on
+</code></pre>
+<p>Update the defines to match your network settings.</p>
+<p>For example, if you have a wireless network named “MyHomeWifi” and you use the password “MyN3tw0rkP@ssw0rd” to connect to it, your <strong>arduino_secrets.h</strong> file would look like this:</p>
+<pre><code class="language-c">#define SECRET_SSID "MyHomeWifi"              // The name of your wireless network
+#define SECRET_PASSWORD "MyN3tw0rkP@ssw0rd"   // The password for your wireless network
+#define SECRET_PORT 8090                      // The port that the REST service will run on
+</code></pre>
+<p>In the same subdirectory, create a file named <strong>web_server_rest_temp.ino</strong> and give it the boilerplate Arduino contents:</p>
+<pre><code class="language-c">void setup()
+{
+
+}
+
+void loop()
+{
+
+}
+</code></pre>
+<p>Your project layout should now look like this:</p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="../images/iot/nano_project_layout.jpg" alt=""><span class="img-wrapper"><img src="../images/iot/nano_project_layout.jpg" alt=""></span></label></p>
+<p>Keep <strong>web_server_rest_temp.ino</strong> open for editing.</p>
+<h1 id="main-sketch"><a class="header" href="#main-sketch">Main Sketch</a></h1>
+<p>We’ll update <strong>web_server_rest_temp.ino</strong> incrementally and explain each update, then show a complete version at the end.</p>
+<p>First, add your includes:</p>
+<pre><code class="language-c">#include "arduino_secrets.h"
+#include &lt;Arduino_LSM6DSOX.h&gt;
+#include &lt;ArduinoJson.h&gt;
+#include &lt;WiFiNINA.h&gt;
+
+</code></pre>
+<p>Then, initialize network settings:</p>
+<pre><code class="language-c">char ssid[] = SECRET_SSID;     // network SSID (name)
+char pass[] = SECRET_PASSWORD; // network password
+int keyIndex = 0;              // network key index number (needed only for WEP)
+int port = SECRET_PORT;
+</code></pre>
+<p>Set the initial status and instantiate the server:</p>
+<pre><code class="language-c">int status = WL_IDLE_STATUS;
+WiFiServer server(port);
+</code></pre>
+<p>Inside <code>setup()</code>, initialize serial communication at 9600 baud. (The serial monitor uses this)</p>
+<pre><code class="language-c">Serial.begin(9600);
+</code></pre>
+<p>Make sure the <a href="../glossary.html#inertial-measurement-unit-imu">IMU</a> is available:</p>
+<pre><code class="language-c">if (!IMU.begin())
+{
+	Serial.println("Failed to initialize IMU!");
+	while (1)
+		;
+}
+</code></pre>
+<blockquote>
+<p>An inertial measurement unit (IMU) is an electronic device that measures and reports a body’s specific force, angular rate, and sometimes the orientation of the body, using a combination of accelerometers, gyroscopes, and sometimes magnetometers. When the magnetometer is included, IMUs are referred to as IMMUs.</p>
+</blockquote>
+<p>Make sure the WiFi module is available:</p>
+<pre><code class="language-c">if (WiFi.status() == WL_NO_MODULE)
+{
+	Serial.println("Communication with WiFi module failed!");
+	while (true)
+		;
+}
+</code></pre>
+<p>See if the WiFi firmware is up to date:</p>
+<pre><code class="language-c">String fv = WiFi.firmwareVersion();
+
+if (fv &lt; WIFI_FIRMWARE_LATEST_VERSION)
+{
+	Serial.println("Please upgrade the firmware");
+}
+</code></pre>
+<p>If it isn’t, then display a message, but still continue.</p>
+<p>Connect to the WiFi network:</p>
+<pre><code class="language-c">while (status != WL_CONNECTED)
+{
+	Serial.print("Attempting to connect to Network named: ");
+	Serial.println(ssid); // print the network name (SSID)
+
+	status = WiFi.begin(ssid, pass);
+
+	// wait 5 seconds for the connection:
+	delay(5000);
+}
+</code></pre>
+<p>Start the server, then print the WiFi status:</p>
+<pre><code class="language-c">server.begin();
+
+printWifiStatus();
+</code></pre>
+<p>The <code>printWifiStatus()</code> function is a new custom function that we need to add.  It displays useful information about our new connection:</p>
+<pre><code class="language-c">void printWifiStatus()
+{
+    // print the SSID of the network you're attached to:
+    Serial.print("SSID: ");
+    Serial.println(WiFi.SSID());
+
+    // print your board's IP address:
+    IPAddress ip = WiFi.localIP();
+    Serial.print("IP Address: ");
+    Serial.println(ip);
+
+    // print the received signal strength:
+    long rssi = WiFi.RSSI();
+    Serial.print("signal strength (RSSI): ");
+    Serial.print(rssi);
+    Serial.println(" dBm");
+}
+</code></pre>
+<p>That concludes our <code>setup()</code> code.  Now we’re ready to move on to <code>loop()</code>.</p>
+<p>First, instantiate a <code>WiFiClient</code>.  It will listen for incoming clients:</p>
+<pre><code class="language-c">WiFiClient client = server.available();
+</code></pre>
+<p>Check to see when a client connects:</p>
+<pre><code class="language-c">if (client)
+{
+
+}
+</code></pre>
+<p>When a client connects, print a message, then initialize a String that will hold incoming data from the client:</p>
+<pre><code class="language-c">if (client)
+{
+	Serial.println("new client");
+
+	String currentLine = "";
+}
+</code></pre>
+<p>Prepare to perform some operations while the client is connected, but only while the client is still available:</p>
+<pre><code class="language-c">if (client)
+{
+	Serial.println("new client");
+
+	String currentLine = "";
+
+	while (client.connected())
+	{
+		if (client.available())
+		{
+		}
+	}
+}
+</code></pre>
+<p>Inside the <code>client.available()</code> block:</p>
+<pre><code class="language-c">// Read one character of the client request at a time:
+char c = client.read();
+
+// If the byte is a newline character:
+if (c == '\n')
+{
+	// If currentline has been cleared, the request is finished, but it wasn't a known endpoint, so send a generic response:
+	if (currentLine.length() == 0)
+	{
+		sendResponse(client, "Hello from Arduino RP2040! Valid endpoints are /Temperature/Current/F and /Temperature/Current/C", -99, "invalid");
+		break;
+	}
+	else
+		currentLine = ""; // If you got a newline, then clear currentLine
+}
+else if (c != '\r')
+	// If you got anything else but a carriage return character, add it to the end of the currentLine:
+	currentLine += c;
+</code></pre>
+<p><code>sendResponse()</code> is another new custom function.  It receives the following as arguments:</p>
+<ul>
+<li>A reference to the WiFiClient,</li>
+<li>a text message,</li>
+<li>a value, and</li>
+<li>a status</li>
+</ul>
+<p>Inside the function:</p>
+<ul>
+<li>A standard HTTP response is sent.</li>
+<li>A JSON document object is created.</li>
+<li>The JSON document is populated with the message, value, and status.</li>
+<li>The JSON object is serialized back to the client.</li>
+</ul>
+<pre><code class="language-c">void sendResponse(WiFiClient &amp;client, char message[], int value, char status[])
+{
+    // Send a standard HTTP response
+    client.println("HTTP/1.1 200 OK");
+    client.println("Content-type: application/json");
+    client.println("Connection: close");
+    client.println();
+
+    // Create a JSON object
+    StaticJsonDocument&lt;200&gt; doc;
+
+    doc["message"] = message;
+    doc["value"] = value;
+    doc["status"] = status;
+
+    // Serialize JSON to client
+    serializeJson(doc, client);
+}
+</code></pre>
+<p>Returning to the <code>loop()</code> function, still inside the <code>client.available()</code> block, we now check to see if a specific endpoint was called by the client:</p>
+<pre><code class="language-c">char request_unit = 'X';
+if (currentLine.indexOf("GET /Temperature/Current/F") != -1)
+	request_unit = 'F';
+if (currentLine.indexOf("GET /Temperature/Current/C") != -1)
+	request_unit = 'C';
+</code></pre>
+<p>We use <code>request_unit</code> to track calls to specific endpoints.  If the client has asked for the current temperature in Fahrenheit or Celsius, we’ll want to respond accordingly:</p>
+<pre><code class="language-c">if (request_unit == 'F' || request_unit == 'C')
+{
+	int current_temperature = (request_unit == 'F') ? getTemperature(true) : getTemperature(false);
+	char temp_units[5];
+	sprintf(temp_units, "°%s", (request_unit == 'F') ? "F" : "C");
+
+	char message[50];
+	sprintf(message, "Current temperature is %d %s", current_temperature, temp_units);
+
+	sendResponse(client, message, current_temperature, "success");
+	break;
+}
+</code></pre>
+<p>If the client has asked for the temperature, we retrieve it with <code>getTemperature()</code>, format the data to return to the client, then send the response.</p>
+<p><code>getTemperature()</code> is another new function. It makes sure the IMU module is available, then retrieves the current temperature value from the IMU temperature sensor.  The IMU returns the temperature in Celsius units, so the value is converted to Fahrenheit, if requested.</p>
+<pre><code class="language-c">int getTemperature(bool as_fahrenheit)
+{
+    if (IMU.temperatureAvailable())
+    {
+        int temperature_deg = 0;
+        IMU.readTemperature(temperature_deg);
+
+        if (as_fahrenheit == true)
+            temperature_deg = celsiusToFahrenheit(temperature_deg);
+
+        return temperature_deg;
+    }
+    else
+    {
+        return -99;
+    }
+}
+</code></pre>
+<p>The <code>celsiusToFahrenheit()</code> function is also new:</p>
+<pre><code class="language-c">int celsiusToFahrenheit(int celsius_value)
+{
+  return (celsius_value * (9 / 5)) + 32;
+}
+</code></pre>
+<p>Returning to the <code>loop()</code> function, after the <code>while (client.connected())</code> block, we perform some cleanup after the client disconnects:</p>
+<pre><code class="language-c">client.stop();
+Serial.println("client disconnected");
+</code></pre>
+<p>And that’s it!  Our full sketch (<strong>web_server_rest_temp.ino</strong>) now looks like this:</p>
+<pre><code class="language-c">#include "arduino_secrets.h"
+#include &lt;Arduino_LSM6DSOX.h&gt;
+#include &lt;ArduinoJson.h&gt;
+#include &lt;WiFiNINA.h&gt;
+
+char ssid[] = SECRET_SSID;     // network SSID (name)
+char pass[] = SECRET_PASSWORD; // network password
+int keyIndex = 0;              // network key index number (needed only for WEP)
+int port = SECRET_PORT;
+
+void setup()
+{
+    Serial.begin(9600);
+
+    if (!IMU.begin())
+    {
+        Serial.println("Failed to initialize IMU!");
+        while (1)
+            ;
+    }
+
+    if (WiFi.status() == WL_NO_MODULE)
+    {
+        Serial.println("Communication with WiFi module failed!");
+        while (true)
+            ;
+    }
+
+    String fv = WiFi.firmwareVersion();
+
+    if (fv &lt; WIFI_FIRMWARE_LATEST_VERSION)
+    {
+        Serial.println("Please upgrade the firmware");
+    }
+
+    while (status != WL_CONNECTED)
+    {
+        Serial.print("Attempting to connect to Network named: ");
+        Serial.println(ssid); // print the network name (SSID);
+
+        // Connect to WPA/WPA2 network. Change this line if using open or WEP network:
+        status = WiFi.begin(ssid, pass);
+        // wait 5 seconds for connection:
+        delay(5000);
+    }
+
+    server.begin();
+    printWifiStatus();
+}
+
+void loop()
+{
+    WiFiClient client = server.available();
+
+    if (client)
+    {
+        Serial.println("new client");
+
+        String currentLine = "";
+
+        while (client.connected())
+        {
+            if (client.available())
+            {
+                // Read one character of the client request at a time:
+                char c = client.read();
+
+                // If the byte is a newline character:
+                if (c == '\n')
+                {
+                    // If currentline has been cleared, the request is finished, but it wasn't a known endpoint, so send a generic response:
+                    if (currentLine.length() == 0)
+                    {
+                        sendResponse(client, "Hello from Arduino RP2040! Valid endpoints are /Temperature/Current/F and /Temperature/Current/C", -99, "invalid");
+                        break;
+                    }
+                    else
+                        currentLine = ""; // If you got a newline, then clear currentLine
+                }
+                else if (c != '\r')
+                    // If you got anything else but a carriage return character, add it to the end of the currentLine:
+                    currentLine += c;
+
+                char request_unit = 'X';
+                if (currentLine.indexOf("GET /Temperature/Current/F") != -1)
+                    request_unit = 'F';
+                if (currentLine.indexOf("GET /Temperature/Current/C") != -1)
+                    request_unit = 'C';
+
+                if (request_unit == 'F' || request_unit == 'C')
+                {
+                    int current_temperature = (request_unit == 'F') ? getTemperature(true) : getTemperature(false);
+                    char temp_units[5];
+                    sprintf(temp_units, "°%s", (request_unit == 'F') ? "F" : "C");
+
+                    char message[50];
+                    sprintf(message, "Current temperature is %d %s", current_temperature, temp_units);
+
+                    sendResponse(client, message, current_temperature, "success");
+                    break;
+                }
+            }
+        }
+
+        client.stop();
+        Serial.println("client disconnected");
+    }
+}
+
+void sendResponse(WiFiClient &amp;client, char message[], int value, char status[])
+{
+    // Send a standard HTTP response
+    client.println("HTTP/1.1 200 OK");
+    client.println("Content-type: application/json");
+    client.println("Connection: close");
+    client.println();
+
+    // Create a JSON object
+    StaticJsonDocument&lt;200&gt; doc;
+
+    doc["message"] = message;
+    doc["value"] = value;
+    doc["status"] = status;
+
+    // Serialize JSON to client
+    serializeJson(doc, client);
+}
+
+void printWifiStatus()
+{
+    // print the SSID of the network you're attached to:
+    Serial.print("SSID: ");
+    Serial.println(WiFi.SSID());
+
+    // print your board's IP address:
+    IPAddress ip = WiFi.localIP();
+    Serial.print("IP Address: ");
+    Serial.println(ip);
+
+    // print the received signal strength:
+    long rssi = WiFi.RSSI();
+    Serial.print("signal strength (RSSI): ");
+    Serial.print(rssi);
+    Serial.println(" dBm");
+}
+
+int getTemperature(bool as_fahrenheit)
+{
+    if (IMU.temperatureAvailable())
+    {
+        int temperature_deg = 0;
+        IMU.readTemperature(temperature_deg);
+
+        if (as_fahrenheit == true)
+            temperature_deg = celsiusToFahrenheit(temperature_deg);
+
+        return temperature_deg;
+    }
+    else
+    {
+        return -99;
+    }
+}
+</code></pre>
+<h1 id="compile-and-upload"><a class="header" href="#compile-and-upload">Compile and Upload</a></h1>
+<p>Make sure the board is connected, then open a terminal.</p>
+<p>Compile:</p>
+<pre><code class="language-bash">make compile
+</code></pre>
+<p>or</p>
+<pre><code class="language-bash">arduino-cli compile --fqbn arduino:mbed_nano:nanorp2040connect web_server_rest_temp
+</code></pre>
+<p>You should see something similar to this:</p>
+<pre><code class="language-txt">Sketch uses 112214 bytes (0%) of program storage space. Maximum is 16777216 bytes.
+Global variables use 44552 bytes (16%) of dynamic memory, leaving 225784 bytes for local variables. Maximum is 270336 bytes.
+
+Used library     Version
+Arduino_LSM6DSOX 1.1.2
+Wire
+SPI
+ArduinoJson      7.3.0
+WiFiNINA         1.9.0
+
+Used platform     Version
+arduino:mbed_nano 4.2.1 
+</code></pre>
+<p>Upload:</p>
+<pre><code class="language-bash">make upload
+</code></pre>
+<p>or</p>
+<pre><code class="language-bash">arduino-cli upload -p /dev/ttyACM0 --fqbn arduino:mbed_nano:nanorp2040connect web_server_rest_temp
+</code></pre>
+<p>You should see something similar to this:</p>
+<pre><code class="language-txt">...
+New upload port: /dev/ttyACM0 (serial)
+</code></pre>
+<p>Start the monitor to check the status of the running server:</p>
+<pre><code class="language-bash">make monitor
+</code></pre>
+<p>or</p>
+<pre><code class="language-bash">arduino-cli monitor -p /dev/ttyACM0
+</code></pre>
+<p>Results will be similar to this:</p>
+<pre><code class="language-txt">Using default monitor configuration for board: arduino:mbed_nano:nanorp2040connect
+Monitor port settings:
+  baudrate=9600
+  bits=8
+  dtr=on
+  parity=none
+  rts=on
+  stop_bits=1
+
+Connecting to /dev/ttyACM0. Press CTRL-C to exit.
+SSID: (network name)
+IP Address: (server ip address)
+signal strength (RSSI): -40 dBm
+</code></pre>
+<h1 id="call-the-service"><a class="header" href="#call-the-service">Call the Service</a></h1>
+<p>Now that we’ve completed our code, flashed the device, and our server is running, we’re ready to test it.</p>
+<p>First, note the server address from the monitor above.  I’ll use an example of 192.168.0.186.</p>
+<p>There are many options for calling the service.  You could use cURL:</p>
+<pre><code class="language-bash">curl --request GET --url http://192.168.0.186:8090/Temperature/Current/F
+</code></pre>
+<p>If you’re using a REST runner that recognizes .http files, your request will look something like this:</p>
+<pre><code class="language-txt">GET http://192.168.0.186:8090/Temperature/Current/F
+</code></pre>
+<p>You could also use a REST client like Postman or Insomnia.  Since these are simple GET requests, you can even put the URL directly into a web browser.  Regardless of how you call the service, though, you should see a response similar to this:</p>
+<pre><code class="language-javascript">HTTP/1.1 200 OK
+Content-type: application/json
+Connection: close
+
+{
+  "message": "Current temperature is 70 °F",
+  "value": 70,
+  "status": "success"
+}
+</code></pre>
+<p>If you call the service with an endpoint it doesn’t recognize, you’ll see this:</p>
+<pre><code class="language-javascript">HTTP/1.1 200 OK
+Content-type: application/json
+Connection: close
+
+{
+  "message": "Hello from Arduino RP2040! Valid endpoints are /Temperature/Current/F and /Temperature/Current/C",
+  "value": -99,
+  "status": "invalid"
+}
+</code></pre>
+<h1 id="next-steps"><a class="header" href="#next-steps">Next Steps</a></h1>
+<p>Now that your temperature monitoring service is up and running, a fun next step might be to go fully remote.  You can easily test this by using a charger block.  For example, I plugged my Nano RP2040 into a <a href="https://www.amazon.com/gp/product/B07T2NRK8G">BLAVOR Solar Charger Power Bank</a>.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../articles/esp8266_micropython_oled.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="../articles/micropython_esp32.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../articles/esp8266_micropython_oled.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="../articles/micropython_esp32.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../mark-09e88c2c.min.js"></script>
+        <script src="../searcher-09f2665d.js"></script>
+
+        <script src="../clipboard-1626706a.min.js"></script>
+        <script src="../highlight-abc7f01d.js"></script>
+        <script src="../book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>
