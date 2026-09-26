@@ -10,7 +10,7 @@ This project will provide an introduction to the concept of the “Internet_of_T
 
 Specifically, we will program a device to provide temperature data, and then make that data publicly available on the web.
 
-(If you’d like to save some time typing in scripts, you can download them [here](https://github.com/jfcarr-hardware/arduino-raspberry-pi-remote-sensor).)
+(If you’d like to save some time typing in scripts, you can download them [here](https://github.com/jfcarr/arduino-raspberry-pi-remote-sensor).)
 
 ## Architecture
 
