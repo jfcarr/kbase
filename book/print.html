@@ -35,10 +35,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-f8d22769.js";
+            window.path_to_searchindex_js = "searchindex-21d86fb3.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-43cabbdb.js"></script>
+        <script src="toc-080424c4.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -192,6 +192,7 @@
 <tr><th>Title</th><th>Added</th></tr>
 </thead>
 <tbody>
+<tr><td><a href="#scaffold-a-simple-go-project">Scaffold a Simple Go Project</a></td><td>October 9, 2026</td></tr>
 <tr><td><a href="#root-access-on-raspberry-pi">Root Access on Raspberry Pi</a></td><td>September 12, 2026</td></tr>
 <tr><td><a href="#apache-setup-in-debianubuntu">Apache Setup in Debian/Ubuntu</a></td><td>September 11, 2026</td></tr>
 <tr><td><a href="#check-and-update-net-10-project-templates">Check and Update .NET 10 Project Templates</a></td><td>March 15, 2026</td></tr>
@@ -199,7 +200,6 @@
 <tr><td><a href="#gradle-quick-start">Gradle Quick Start</a></td><td>January 30, 2026</td></tr>
 <tr><td><a href="#get-path-for-executable-netc">Get Path For Executable (.NET/C#)</a></td><td>November 30, 2025</td></tr>
 <tr><td><a href="#manual-installation-of-net-sdk-in-linux">Manual Installation of .NET SDK in Linux</a></td><td>November 14, 2025</td></tr>
-<tr><td><a href="#generating-thumbnails-for-video-and-audio-files-in-ubuntu">Generating Thumbnails for Video and Audio Files In Ubuntu</a></td><td>November 6, 2025</td></tr>
 </tbody>
 </table>
 </div>
@@ -4420,6 +4420,156 @@ uv tool run --from adafruit-ampy ampy -p /dev/ttyUSB0 ls
 </tbody>
 </table>
 </div>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="go"><a class="header" href="#go">Go</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="scaffold-a-simple-go-project"><a class="header" href="#scaffold-a-simple-go-project">Scaffold a Simple Go Project</a></h1>
+<p>For this exercise, we’ll create a Go project called “my-greeter”.</p>
+<h2 id="create-the-project"><a class="header" href="#create-the-project">Create the project</a></h2>
+<p>Create a directory for the project and <code>cd</code> into it:</p>
+<pre><code class="language-bash">mkdir my-greeter
+
+cd my-greeter
+</code></pre>
+<p>When you import packages from other modules, those dependencies are managed through your code’s module.  This is defined by a go.mod file that will track those modules. The go.mod file must stay with your project, including in your source code repository (if applicable).</p>
+<p>When you enable dependency tracking, you should provide a name that reflects the module your code will be in.  For actual development, this will typically be the repository location where your source code will be kept. For example, the module path might be <code>github.com/mymodule</code>. If you plan to publish your module for others to use, the module path must be a location from which Go tools can download your module. Learn more here: <a href="https://go.dev/doc/modules/managing-dependencies#naming_module">Managing dependencies</a>.</p>
+<p>For this example, just use <code>example/my-greeter</code>:</p>
+<pre><code class="language-bash">go mod init example/my-greeter
+</code></pre>
+<p>Output:</p>
+<pre><code>go: creating new go.mod: module example/my-greeter
+</code></pre>
+<p>This will create a <code>go.mod</code> file with contents similar to this:</p>
+<pre><code>module example/my-greeter
+
+go 1.27.1
+</code></pre>
+<h2 id="add-a-program"><a class="header" href="#add-a-program">Add a program</a></h2>
+<p>Next, create a <code>greeter.go</code> file and paste this content into it:</p>
+<pre><code class="language-go">package main
+
+import "fmt"
+
+func main() {
+	fmt.Println("Greetings!")
+}
+</code></pre>
+<p>In this code:</p>
+<ul>
+<li>A <code>main</code> package is declared.  A package provides a way to group functions.</li>
+<li>The <a href="https://pkg.go.dev/fmt/">fmt package</a> is imported. It provides functions for formatting text, including printing to the console. This package is part of the standard library, so it doesn’t need to be added as an external package.</li>
+<li>A <code>main()</code> function is implemented, providing an entry point into the program.</li>
+</ul>
+<p>Run the file:</p>
+<pre><code class="language-bash">go run greeter.go
+</code></pre>
+<p>Output:</p>
+<pre><code>Greetings!
+</code></pre>
+<h2 id="call-an-external-package"><a class="header" href="#call-an-external-package">Call an external package</a></h2>
+<p>We’ll add a “quote” package and call a function in it.</p>
+<ol>
+<li>Go to pkg.go.dev and <a href="https://pkg.go.dev/search?q=quote">search for a “quote” package</a>.</li>
+<li>Locate and click on <code>v1</code> of the <code>rsc.io/quote</code> package. You’ll see a list of functions available in the package.  (We’ll be using the <code>Go()</code> function)</li>
+</ol>
+<p>Update <code>greeter.go</code> so that it looks like this:</p>
+<pre><code class="language-go">package main
+
+import (
+	"fmt"
+
+	"rsc.io/quote"
+)
+
+func main() {
+	fmt.Println("Greetings! Here's a quote:")
+
+	fmt.Println(quote.Go())
+}
+</code></pre>
+<p>You’ll notice a couple of changes:</p>
+<ol>
+<li>We’ve added an import for the external “quote” package, and</li>
+<li>We’re calling the Go() function in that package.</li>
+</ol>
+<p>But this alone is not adequate. If we try to run the project now, we get an error:</p>
+<pre><code class="language-bash">go run greeter.go
+</code></pre>
+<p>Output:</p>
+<pre><code>greeter.go:6:2: no required module provides package rsc.io/quote; to add it:
+	go get rsc.io/quote
+</code></pre>
+<p>This is because we’re attempting to import a package that hasn’t been added to the project.  Let’s fix it:</p>
+<pre><code class="language-bash">go get rsc.io/quote
+</code></pre>
+<p>Output:</p>
+<pre><code>go: downloading rsc.io/quote v1.5.2
+go: downloading rsc.io/sampler v1.3.0
+go: downloading golang.org/x/text v0.0.0-20170915032832-14c0d48ead0c
+go: added golang.org/x/text v0.0.0-20170915032832-14c0d48ead0c
+go: added rsc.io/quote v1.5.2
+go: added rsc.io/sampler v1.3.0
+</code></pre>
+<p>The <code>go get</code> command adds the quote package to the project, along with references to additional packages that quote depends on.</p>
+<p>To accomplish this, the <code>go.mod</code> file gets updated:</p>
+<pre><code>module example/my-greeter
+
+go 1.27.1
+
+require (
+	rsc.io/quote v1.5.2
+	golang.org/x/text v0.0.0-20170915032832-14c0d48ead0c // indirect
+	rsc.io/sampler v1.3.0 // indirect
+)
+</code></pre>
+<p>And a new <code>go.sum</code> file is added:</p>
+<pre><code>golang.org/x/text v0.0.0-20170915032832-14c0d48ead0c h1:qgOY6WgZOaTkIIMiVjBQcw93ERBE4m30iBm00nkL0i8=
+golang.org/x/text v0.0.0-20170915032832-14c0d48ead0c/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
+rsc.io/quote v1.5.2 h1:w5fcysjrx7yqtD/aO+QwRjYZOKnaM9Uh2b40tElTs3Y=
+rsc.io/quote v1.5.2/go.mod h1:LzX7hefJvL54yjefDEDHNONDjII0t9xZLPXsUe+TKr0=
+rsc.io/sampler v1.3.0 h1:7uVkIFmeBqHfdjD+gZwtXXI+RODJ2Wc4O7MPEh/QiW4=
+rsc.io/sampler v1.3.0/go.mod h1:T1hPZKmBbMNahiBKFy5HrXp6adAjACjK9JXDnKaTXpA=
+</code></pre>
+<p>Now, our program works:</p>
+<pre><code class="language-bash">go run greeter.go
+</code></pre>
+<p>Output:</p>
+<pre><code>Greetings! Here's a quote:
+Don't communicate by sharing memory, share memory by communicating.
+</code></pre>
+<p>References can also be refreshed at any time with this:</p>
+<pre><code class="language-bash">go mod tidy
+</code></pre>
+<p>If we run it now, we see that <code>go.mod</code> gets reorganized a bit:</p>
+<pre><code>module example/my-greeter
+
+go 1.27.1
+
+require rsc.io/quote v1.5.2
+
+require (
+	golang.org/x/text v0.0.0-20170915032832-14c0d48ead0c // indirect
+	rsc.io/sampler v1.3.0 // indirect
+)
+</code></pre>
+<p>Finally, we can generate a standalone executable with this:</p>
+<pre><code class="language-bash">go build
+</code></pre>
+<p>This produces a statically linked binary:</p>
+<pre><code class="language-bash">file my-greeter
+</code></pre>
+<p>Output:</p>
+<pre><code>my-greeter: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked,
+Go BuildID=L3BxWSF4oD-DWwXKLm72/Bz3veI-EabZcdQArLtVF/DxUbGthXdYMhCtveD6dv/wnXe8ZvLnaBOp751-Odv,
+BuildID[sha1]=611276cb88c0cd80efc9142e96779c266816d23f, with debug_info, not stripped
+</code></pre>
+<p>And we can run it directly:</p>
+<pre><code class="language-bash">./my-greeter
+</code></pre>
+<p>Output:</p>
+<pre><code>Greetings! Here's a quote:
+Don't communicate by sharing memory, share memory by communicating.
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="java"><a class="header" href="#java">Java</a></h1>
 <div style="break-before: page; page-break-before: always;"></div>
