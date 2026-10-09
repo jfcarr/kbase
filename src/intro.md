@@ -14,6 +14,7 @@ This is a collection of articles about how to do stuff, mostly technical. [Learn
 
 Title | Added
 ----- | -----
+[Scaffold a Simple Go Project](./articles/scaffold_simple_go_project.md) | October 9, 2026
 [Root Access on Raspberry Pi](./articles/root_access_raspberry.md) | September 12, 2026
 [Apache Setup in Debian/Ubuntu](./articles/apache_setup_debian_linux.md) | September 11, 2026
 [Check and Update .NET 10 Project Templates](./articles/check_update_dotnet10_project_templates.md) | March 15, 2026
@@ -21,7 +22,6 @@ Title | Added
 [Gradle Quick Start](./articles/gradle_quick_start.md) | January 30, 2026
 [Get Path For Executable (.NET/C#)](./articles/get_path_executable.md) | November 30, 2025
 [Manual Installation of .NET SDK in Linux](./articles/manual_install_dotnet_sdk_linux.md) | November 14, 2025
-[Generating Thumbnails for Video and Audio Files In Ubuntu](./articles/generate_thumb_video_audio_ubuntu.md) | November 6, 2025
 
 ## Pinned
 

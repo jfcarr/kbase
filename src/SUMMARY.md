@@ -64,6 +64,8 @@
   - [Sense HAT](./articles/sense_hat.md)
   - [Simple Raspberry Pi Control With .NET IoT and Python](./articles/simple_raspberry_dotnet_python.md)
   - [Using UV To Manage a ESP8266 MicroPython Project](./articles/using_uv_esp8266_micropython.md)
+- [Go](./topics/go.md)
+  - [Scaffold a Simple Go Project](./articles/scaffold_simple_go_project.md)
 - [Java](./topics/java.md)
   - [File Operations in Java](./articles/file_ops_java.md)
   - [Gradle Quick Start](./articles/gradle_quick_start.md)
